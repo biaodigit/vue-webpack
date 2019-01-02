@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div :class="$style.home">
         <h1>
             home
             <p class="title">title</p>
@@ -13,6 +13,11 @@
     }
 </script>
 
-<style lang="scss" scoped>
-    @import "../../css/reset.scss";
+<style lang="scss" scoped module>
+    @import "../../common/scss/reset";
+
+    .home {
+        color:red;
+        font-size: 80px;
+    }
 </style>

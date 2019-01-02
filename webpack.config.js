@@ -1,11 +1,12 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 module.exports = {
     mode: 'none',
     entry: {
-        app: './src/js/main.js'
+        app: './src/main.js'
     },
     output: {
         filename: '[name].min.js',
@@ -24,7 +25,17 @@ module.exports = {
             },
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
+                loader: 'vue-loader',
+                options: {
+                    cssModules: {
+                        localIdentName: '[path][name]---[local]---[hash:base64:5]',
+                        camelCase: true
+                    },
+                    loaders: {
+                        css: 'vue-style-loader!css-loader!px2rem-loader?remUnit=75&remPrecision=8',
+                        scss: 'vue-style-loader!css-loader!px2rem-loader?remUnit=75&remPrecision=8!sass-loader'
+                    }
+                }
             },
             {
                 test: /\.scss$/,
@@ -35,7 +46,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            template: './src/views/index.html'
+            template: './index.html'
         })
     ],
     devServer: {
