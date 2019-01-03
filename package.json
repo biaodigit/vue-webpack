@@ -9,23 +9,25 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vue": "^2.5.21",
-    "vue-router": "^3.0.2"
+    "vue": "2.5.17",
+    "vue-router": "3.0.1"
   },
   "devDependencies": {
-    "clean-webpack-plugin": "^1.0.0",
-    "css-loader": "^2.1.0",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
-    "node-sass": "^4.11.0",
-    "px2rem-loader": "^0.1.9",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
-    "vue-loader": "^14.2.2",
-    "vue-style-loader": "^4.1.2",
-    "vue-template-compiler": "^2.5.21",
-    "webpack": "^4.28.3",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.14"
+    "cache-loader": "1.2.2",
+    "css-loader": "1.0.0",
+    "clean-webpack-plugin": "0.1.17",
+    "html-loader": "0.5.1",
+    "html-webpack-plugin": "3.2.0",
+    "mini-css-extract-plugin": "0.4.1",
+    "node-sass": "4.9.2",
+    "px2rem-loader": "0.1.9",
+    "sass-loader": "7.0.3",
+    "style-loader": "0.19.0",
+    "vue-loader": "15.2.6",
+    "vue-style-loader": "4.1.1",
+    "vue-template-compiler": "2.5.17",
+    "webpack": "4.16.2",
+    "webpack-cli": "3.1.0",
+    "webpack-dev-server": "3.1.10"
   }
 }

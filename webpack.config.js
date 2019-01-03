@@ -1,57 +1,80 @@
-const path = require('path')
+const path = require('path');
+// const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-module.exports = {
-    mode: 'none',
-    entry: {
-        app: './src/main.js'
-    },
-    output: {
-        filename: '[name].min.js',
-        path: path.resolve(__dirname, 'dist')
-    },
-    resolve: {
-        alias: {
-            'vue$': 'vue/dist/vue.esm.js'
-        }
-    },
-    module: {
-        rules: [
-            {
-                test: '/\.html$/',
-                loader: 'html-loader'
-            },
-            {
-                test: /\.vue$/,
-                loader: 'vue-loader',
-                options: {
-                    cssModules: {
-                        localIdentName: '[path][name]---[local]---[hash:base64:5]',
-                        camelCase: true
-                    },
-                    loaders: {
-                        css: 'vue-style-loader!css-loader!px2rem-loader?remUnit=75&remPrecision=8',
-                        scss: 'vue-style-loader!css-loader!px2rem-loader?remUnit=75&remPrecision=8!sass-loader'
-                    }
-                }
-            },
-            {
-                test: /\.scss$/,
-                loader: 'style-loader!css-loader!scss-loader'
-            }
-        ]
-    },
-    plugins: [
+
+module.exports = env => {
+    if (!env) {
+        env = {}
+    }
+    let plugins = [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             template: './index.html'
-        })
-    ],
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        compress: true,
-        port: 9000
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].min.css',
+        }),
+        new VueLoaderPlugin()
+    ];
+    return {
+        mode: 'development',
+        entry: './src/main.js',
+        output: {
+            filename: '[name].min.js',
+            path: path.resolve(__dirname, 'dist')
+        },
+        devServer: {
+            contentBase: path.join(__dirname, 'dist'),
+            compress: true,
+            port: 9000
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.html$/,
+                    use: 'html-loader'
+                },
+                {
+                    test: /\.vue$/,
+                    use: 'vue-loader'
+                },
+                {
+                    test: /\.scss$/,
+                    oneOf: [{
+                        resourceQuery: /module/,
+                        use: [
+                            MiniCssExtractPlugin.loader,
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    modules: true,
+                                    localIdentName: '[local]_[hash:base64:5]'
+                                }
+                            }, {
+                                loader: 'px2rem-loader',
+                                options: {
+                                    remUnit: 40,
+                                    remPrecision: 8
+                                }
+                            },
+                            'sass-loader'
+                        ]
+                    }],
+                }
+            ]
+        },
+        plugins,
+        resolve: {
+            extensions: [
+                '.js', '.vue', '.json'
+            ],
+            alias: {
+                'vue$': 'vue/dist/vue.esm.js'
+            }
+        }
     }
-}
+};

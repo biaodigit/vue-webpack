@@ -2,7 +2,7 @@
     <div :class="$style.home">
         <h1>
             home
-            <p class="title">title</p>
+            <p :class="$style.title">title</p>
         </h1>
     </div>
 </template>
@@ -17,7 +17,6 @@
     @import "../../common/scss/reset";
 
     .home {
-        color:red;
         font-size: 80px;
     }
 </style>
