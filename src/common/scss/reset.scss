@@ -1,7 +1,16 @@
 h1 {
+  display: flex;
   color: #f00;
   .title {
     color: yellow;
     font-size: 80px;
   }
+}
+
+:root {
+  --mainColor: red
+}
+
+a {
+  color: var(--mainColor)
 }

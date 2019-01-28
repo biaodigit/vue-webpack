@@ -1,9 +1,9 @@
 const path = require('path');
-// const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 
 module.exports = env => {
@@ -18,11 +18,12 @@ module.exports = env => {
         new MiniCssExtractPlugin({
             filename: '[name].min.css',
         }),
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new UglifyJsPlugin()
     ];
     return {
         mode: 'development',
-        entry: './src/main.js',
+        entry: ['./src/main.js', './src/viewport.js'],
         output: {
             filename: '[name].min.js',
             path: path.resolve(__dirname, 'dist')
@@ -59,6 +60,15 @@ module.exports = env => {
                                 options: {
                                     remUnit: 40,
                                     remPrecision: 8
+                                }
+                            }, {
+                                loader: 'postcss-loader',
+                                options: {
+                                    ident:'postcss',
+                                    plugins: [
+                                        require('postcss-cssnext')(),
+                                        require('cssnano')()
+                                    ]
                                 }
                             },
                             'sass-loader'
